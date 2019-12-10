@@ -1,0 +1,8 @@
+# na raiz do projeto
+# https://medium.com/@renato.groffe/asp-net-core-2-2-docker-vis%C3%A3o-geral-e-exemplos-1610891e75b4
+dotnet publish Process/ONS.SAGER.Calculo.Taxa.Teip.Mensal.Process/ONS.SAGER.Calculo.Taxa.Teip.Mensal.Process.csproj -o publish/Process
+
+cp Dockerfile publish/Process/
+cp plataforma.json publish/Process/
+cp -R Mapa/ publish/Process/
+cp -R Metadados/ publish/Process/
