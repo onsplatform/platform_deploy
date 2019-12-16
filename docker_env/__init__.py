@@ -6,23 +6,21 @@ from random import randint
 
 class DockerAppDeploy:
 
-    def __init__(self, config):
+    def __init__(self, config, registry):
         self.config = config
+        self.registry = registry
         self.client = docker.from_env()
 
-    def deploy(self, image_id):
-        variables = {
-            'API_MODE': True,
-            'SYSTEM_ID': self.config['solution']['id']
-        }
-        if self.config['app']['type'] == 'presentation':
-            self.rm()
-            self.run(image_id, variables)
-
     def build_image(self):
-        build = self.client.images.build(path='.', tag=self._get_tag(), labels=self._get_labels(), nocache=True)
+        build = self.client.images.build(path='.', tag=self._get_tag_name(), labels=self._get_labels(), nocache=True)
         if build:
             return build[0]
+
+    def tag(self, image):
+        image.tag(repository=self._get_repository(), tag=self.config['app']['version'])
+
+    def push_image(self):
+        self.client.images.push(repository=self._get_repository())
 
     def rm(self):
         docker_name = self.config['app']['docker']
@@ -63,7 +61,11 @@ class DockerAppDeploy:
             'traefik.port': '8088'
         }
 
-    def _get_tag(self):
+    def _get_tag_name(self):
+        app = self.config['app']['docker']
         version = self.config['app']['version']
-        docker_name = self.config['app']['docker']
-        return 'registry:5000/{docker_name}:{version}'.format(docker_name=docker_name, version=version)
+        return '{app}:{version}'.format(app=app, version=version)
+
+    def _get_repository(self):
+        app = self.config['app']['docker']
+        return '{registry}/{app}'.format(registry=self.registry, app=app)
