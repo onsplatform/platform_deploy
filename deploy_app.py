@@ -18,7 +18,7 @@ class DeployApp:
         environment = self.get_platform(args.environment)
         image = environment.build_image()
         environment.tag(image)
-        environment.push_image(self.REGISTRY)
+        environment.push_image()
         # call api core
         # call domain schema
         if self.platform_json['app']['type'] == 'presentation':
