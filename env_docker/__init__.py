@@ -34,14 +34,14 @@ class DockerAppDeploy():
         self.client.images.pull(self._get_repository(app),
                                 auth_config={'username': self.registry_username, 'password': self.registry_password})
 
-    def run(self, app_name, tag, variables, labels):
+    def run(self, app, tag, variables, labels):
         self.client.containers.run(
-            image=self._get_repository(app_name) + f':{tag}',
+            image=self._get_repository(app) + f':{tag}',
             labels=labels,
             environment=variables,
             network='plataforma_network',
             ports={"7" + str(randint(100, 999)): 9229},
-            name=app_name
+            name=app
         )
 
     def _get_repository(self, app):

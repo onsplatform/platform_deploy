@@ -21,7 +21,7 @@ class PlatformBase:
     def get_tag_name(self):
         return self.platform_json['app']['version']
 
-    def get_app_tag(self):
+    def get_app_and_tag(self):
         return '{app}:{tag}'.format(app=self.get_app(), tag=self.get_tag_name())
 
     def get_app(self):

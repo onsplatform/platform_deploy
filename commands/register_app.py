@@ -19,9 +19,9 @@ class RegisterApp(PlatformBase):
         app_id = self.schema.get_app_id(solution['id_domain'], app['name'])
 
         if app_id:
-            self.schema.update_app(app_id, app, solution, self.get_app_tag())
+            self.schema.update_app(app_id, app, solution, self.get_app_and_tag())
         else:
-            self.schema.create_app(app, solution, self.get_app_tag())
+            self.schema.create_app(app, solution, self.get_app_and_tag())
 
     def register_core_api(self):
         pass

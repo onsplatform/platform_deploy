@@ -11,12 +11,12 @@ parser.add_argument('--build',
                     action='store_true'
                     )
 parser.add_argument('--register_schema',
-                    help='bregistra uma aplicação no schema do ambiente',
+                    help='registra uma aplicação no schema do ambiente',
                     default=False,
                     action='store_true'
                     )
 parser.add_argument('--run_presentation',
-                    help='run a presentation app',
+                    help='inicia uma aplicação do tipo presenter',
                     default=False,
                     action='store_true'
                     )
@@ -31,7 +31,7 @@ parser.add_argument('--environment',
                     default='tst'
                     )
 parser.add_argument('--config_json',
-                    help='Arquivo de configuracao (plataforma.json)',
+                    help='arquivo de configuração (plataforma.json)',
                     default='plataforma.json'
                     )
 
