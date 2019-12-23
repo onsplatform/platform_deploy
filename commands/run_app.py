@@ -5,9 +5,9 @@ class RunApp(PlatformBase):
 
     def run_presentation(self):
         if self.is_presentation:
-            import pdb;pdb.set_trace()
             self.environment.rm(self.get_app())
-            self.environment.run(self.get_app_tag(), self.get_app(), self._get_variables(),
+            self.environment.pull(self.get_app())
+            self.environment.run(self.get_app(), self.get_tag_name(), self._get_variables(),
                                  dict(self._get_labels(), **self._get_traefik_labels()))
 
     def _get_variables(self):

@@ -13,5 +13,7 @@ SCHEMA = {
 }
 
 REGISTRY = {
-    'uri': os.environ.get('IMAGE_REGISTRY', 'localhost:5000')
+    'uri': os.environ.get('IMAGE_REGISTRY', 'localhost:5000'),
+    'username': os.environ.get('IMAGE_REGISTRY_USERNAME', 'username'),
+    'password': os.environ.get('IMAGE_REGISTRY_PASSWORD', 'password'),
 }

@@ -9,6 +9,8 @@ class DockerAppDeploy():
     def __init__(self, settings):
         self.client = docker.from_env()
         self.registry = settings.REGISTRY['uri']
+        self.registry_username = settings.REGISTRY['username']
+        self.registry_password = settings.REGISTRY['password']
 
     def build_image(self, app_tag, labels):
         build = self.client.images.build(path='.', tag=app_tag, labels=labels, nocache=True)
@@ -28,9 +30,13 @@ class DockerAppDeploy():
         except APIError:
             print('docker.errors.APIError at remove()')
 
-    def run(self, image, app_name, variables, labels):
+    def pull(self, app):
+        self.client.images.pull(self._get_repository(app),
+                                auth_config={'username': self.registry_username, 'password': self.registry_password})
+
+    def run(self, app_name, tag, variables, labels):
         self.client.containers.run(
-            image=image,
+            image=self._get_repository(app_name) + f':{tag}',
             labels=labels,
             environment=variables,
             network='plataforma_network',
