@@ -1,16 +1,22 @@
 import argparse
 
-from build_app import BuildApp
-from register_app import RegisterApp
+from commands.run_app import RunApp
+from commands.build_app import BuildApp
+from commands.register_app import RegisterApp
 
 parser = argparse.ArgumentParser(description="Deploy na plataforma")
 parser.add_argument('--build',
-                    help='build a image and push to registry',
+                    help='compila uma imagem e envia para o registro de imagens',
                     default=False,
                     action='store_true'
                     )
 parser.add_argument('--register_schema',
-                    help='build a image and push to registry',
+                    help='bregistra uma aplicação no schema do ambiente',
+                    default=False,
+                    action='store_true'
+                    )
+parser.add_argument('--run_presentation',
+                    help='run a presentation app',
                     default=False,
                     action='store_true'
                     )
@@ -35,3 +41,5 @@ if args.build:
     BuildApp(args).build()
 elif args.register_schema:
     RegisterApp(args).register()
+elif args.run_presentation:
+    RunApp(args).run_presentation()
