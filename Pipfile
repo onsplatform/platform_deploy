@@ -10,6 +10,7 @@ pep8 = "*"
 argparse = "*"
 docker = "*"
 requests = "*"
+ons-platform-python-sdk = {editable = true,git = "https://github.com/onsplatform/platform_sdk.git"}
 
 [requires]
 python_version = "3.7"

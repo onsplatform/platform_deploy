@@ -8,6 +8,7 @@ from env_openshift import OpenShiftAppDeploy
 class PlatformBase:
 
     def __init__(self, args):
+        self.args = args
         self.environment = self.get_platform(args)
         self.load_platform_json(args)
 

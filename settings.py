@@ -2,13 +2,25 @@ import os
 
 SCHEMA = {
     'tst': {
-        'uri': os.environ.get('SCHEMA_URI', 'http://localhost:8002/api/v1/')
+        'uri': os.environ.get('SCHEMA_URI', 'http://localhost:9092/api/v1/')
     },
     'hmg': {
-        'uri': os.environ.get('SCHEMA_URI', 'http://localhost:8002/api/v1/')
+        'uri': os.environ.get('SCHEMA_URI', 'http://localhost:9092/api/v1/')
     },
     'prd': {
-        'uri': os.environ.get('SCHEMA_URI', 'http://localhost:8002/api/v1/')
+        'uri': os.environ.get('SCHEMA_URI', 'http://localhost:9092/api/v1/')
+    }
+}
+
+CORE_API = {
+    'tst': {
+        'uri': os.environ.get('COREAPI_URI', 'http://localhost:9110/core/')
+    },
+    'hmg': {
+        'uri': os.environ.get('COREAPI_URI', 'http://localhost:9110/core/')
+    },
+    'prd': {
+        'uri': os.environ.get('COREAPI_URI', 'http://localhost:9110/core/')
     }
 }
 
