@@ -1,4 +1,4 @@
-from platform_sdk.platform_sdk.core_api import SystemCore
+from platform_sdk.core_api import SystemCore
 import settings
 
 from os import listdir,getcwd
