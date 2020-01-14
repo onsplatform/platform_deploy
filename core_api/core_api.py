@@ -17,7 +17,6 @@ class CoreApi:
         solution_result = system_core.find_by_id(solution['id'])    
         if len(solution_result.content) == 0:
             solution_result = system_core.create(solution)
-        pprint(solution_result.content)
         return solution_result.content
 
     def register_app(self, app):
@@ -25,7 +24,6 @@ class CoreApi:
         app_result = system_core.find_by_id(app['id'])      
         if len(app_result.content) == 0:
             app_result = system_core.create(app)
-        pprint(app_result.content)
         return app_result.content
 
     def upload_maps(self, solution,app):
@@ -34,6 +32,8 @@ class CoreApi:
         map_yml = self.__get_files(map_names,path)[0]
         map_yml['systemId'] = solution['id']
         map_yml['processId'] = app['id']
+        # map_yml['reprocess'] = True
+        breakpoint()
 
         system_core = SystemCore(self.url,'map')
         map_result = system_core.create(map_yml)
@@ -55,8 +55,9 @@ class CoreApi:
             operation['event_out'] = operation['name'] + '.done'
             operations.append(operation)
         system_core = SystemCore(self.url,'operation')
+        breakpoint()
         operations_result = system_core.create(operations)
-        pprint(operations_result.content)
+        # pprint(operations_result.content)
         return operations_result.content
         
     def __list_yaml_files(self,path):
