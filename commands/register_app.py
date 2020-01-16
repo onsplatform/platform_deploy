@@ -35,6 +35,7 @@ class RegisterApp(PlatformBase):
     def __register_core_api(self, solution, app):
         self.core_api.register_solution(solution)
         print('Registered Solution in Core Api')
+        
         self.core_api.register_app(app)
         print('Registered Application in Core Api')
 

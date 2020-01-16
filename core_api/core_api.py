@@ -1,4 +1,5 @@
-from platform_sdk.core_api import SystemCore
+from platform_sdk.core_api import core_system_solution,core_app,core_map,core_metadata
+
 import settings
 
 from os import listdir, getcwd
@@ -13,17 +14,17 @@ class CoreApi:
         self.url = settings.CORE_API[environment]['uri']
 
     def register_solution(self, solution):
-        system_core = SystemCore(self.url, 'system')
-        solution_result = system_core.find_by_id(solution['id'])
+        core_api_solution = core_system_solution.SystemSolution(self.url)
+        solution_result = core_api_solution.find_by_id(solution['id'])
         if len(solution_result.content) == 0:
-            solution_result = system_core.create(solution)
+            solution_result = core_api_solution.create(solution)
         return solution_result.content
 
     def register_app(self, app):
-        system_core = SystemCore(self.url, 'installedApp')
-        app_result = system_core.find_by_id(app['id'])
+        core_api_app = core_app.App(self.url)
+        app_result = core_api_app.find_by_id(app['id'])
         if len(app_result.content) == 0:
-            app_result = system_core.create(app)
+            app_result = core_api_app.create(app)
         return app_result.content
 
     def upload_maps(self, solution, app):
@@ -35,8 +36,8 @@ class CoreApi:
             map_yml[m]['systemId'] = solution['id']
             map_yml[m]['processId'] = app['id']
             maps.append(map_yml[m])
-        system_core = SystemCore(self.url, 'map')
-        map_result = system_core.create(maps)
+        core_api_maps = core_map.Map(self.url)
+        map_result = core_api_maps.create(maps)
         return map_result.content
 
     def upload_operations(self, solution, app):
@@ -52,8 +53,8 @@ class CoreApi:
             operation['event_in'] = operation['event']
             operation['event_out'] = operation['name'] + '.done'
             operations.append(operation)
-        system_core = SystemCore(self.url, 'operation')
-        operations_result = system_core.create(operations)
+        core_operations = core_metadata.Metadata(self.url)
+        operations_result = core_operations.create(operations)
         return operations_result.content
 
     def __list_yaml_files(self, path):
