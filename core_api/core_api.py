@@ -6,8 +6,7 @@ from os import listdir, getcwd
 from os.path import isfile, join
 import yaml
 
-
-class CoreApi:
+    class CoreApi:
 
     def __init__(self, environment):
         self.environment = environment
@@ -31,13 +30,14 @@ class CoreApi:
         path = getcwd() + '/Mapa/'
         map_names = self.__list_yaml_files(path)
         map_yml = self.__get_files(map_names, path)[0]
-        maps = []
-        for m in map_yml:
-            map_yml[m]['systemId'] = solution['id']
-            map_yml[m]['processId'] = app['id']
-            maps.append(map_yml[m])
+        content_mirror = str(yaml.dump(map_yml))
+        map_yml['content'] = content_mirror
+        map_yml['name'] = app['name']
+        map_yml['systemId'] = solution['id']
+        map_yml['processId'] = app['id']
+        map_yml['version'] = app['version']
         core_api_maps = core_map.Map(self.url)
-        map_result = core_api_maps.create(maps)
+        map_result = core_api_maps.create(map_yml)
         return map_result.content
 
     def upload_operations(self, solution, app):
@@ -52,9 +52,11 @@ class CoreApi:
             operation['processId'] = app['id']
             operation['event_in'] = operation['event']
             operation['event_out'] = operation['name'] + '.done'
+            operation['version'] = app['version']
             operations.append(operation)
         core_operations = core_metadata.Metadata(self.url)
         operations_result = core_operations.create(operations)
+
         return operations_result.content
 
     def __list_yaml_files(self, path):
