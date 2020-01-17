@@ -1,10 +1,12 @@
-from platform_sdk.core_api import core_system_solution,core_app,core_map,core_metadata
-
-import settings
-
+import yaml
 from os import listdir, getcwd
 from os.path import isfile, join
-import yaml
+
+import settings
+from platform_sdk.core_api import core_system_solution, core_app, core_map, core_metadata
+
+
+
 
 class CoreApi:
 

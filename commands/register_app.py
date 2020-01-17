@@ -2,9 +2,6 @@ from commands.platform_base import PlatformBase
 from domain.domain_schema import DomainSchema
 from core_api.core_api import CoreApi
 
-from pprint import pprint
-
-
 class RegisterApp(PlatformBase):
 
     def __init__(self, args):
