@@ -18,7 +18,7 @@ parser.add_argument('--register_schema',
 parser.add_argument('--run_presentation',
                     help='inicia uma aplicação do tipo presenter',
                     default=False,
-                    action='store_true'
+                    action='store_true' 
                     )
 parser.add_argument('--platform',
                     help='docker ou openshift',
@@ -38,8 +38,18 @@ parser.add_argument('--config_json',
 args = parser.parse_args()
 
 if args.build:
+    print('')
+    print('Initializing Build...')
     BuildApp(args).build()
+    print('Build Succeeded!')
+    print('')
 elif args.register_schema:
+    print('')
+    print('Registering Application Schema...')
+    print('')
     RegisterApp(args).register()
+    print('')
+    print('Registration Succeeded!')
+    print('')
 elif args.run_presentation:
     RunApp(args).run_presentation()
