@@ -6,7 +6,7 @@ from os import listdir, getcwd
 from os.path import isfile, join
 import yaml
 
-    class CoreApi:
+class CoreApi:
 
     def __init__(self, environment):
         self.environment = environment

@@ -20,17 +20,21 @@ class RegisterApp(PlatformBase):
         self.__register_core_api(self.solution.copy(), self.app.copy())
 
     def __register_domain_schema(self, solution, app):
-        self.schema.create_solution(solution)
-        print('Solution Created')
+
+        solution_return = self.schema.create_solution(solution)
+        if solution_return and solution_return.status_code == 200 and len(solution_return) > 0:
+            print('Solution Created')
+        else:
+            print('Solution not Created')
 
         app_id = self.schema.get_app_id(solution['id_domain'], app['name'])
         if app_id:
             self.schema.update_app(app_id, app, solution,
                                    self.get_app_and_tag())
-            print('App Created')
+            print('App Updated')
         else:
             self.schema.create_app(app, solution, self.get_app_and_tag())
-            print('App Updated')
+            print('App Created')
 
     def __register_core_api(self, solution, app):
         self.core_api.register_solution(solution)
