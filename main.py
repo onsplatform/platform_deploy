@@ -43,6 +43,7 @@ if args.build:
     BuildApp(args).build()
     print('Build Succeeded!')
     print('')
+    
 elif args.register_schema:
     print('')
     print('Registering Application Schema...')
@@ -51,5 +52,12 @@ elif args.register_schema:
     print('')
     print('Registration Succeeded!')
     print('')
+
 elif args.run_presentation:
+    print('')
+    print('Started the process to run presentation...')
+    print('')
     RunApp(args).run_presentation()
+    print('')
+    print('Application is running!')
+    print('')

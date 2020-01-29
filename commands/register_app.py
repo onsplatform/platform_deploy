@@ -2,6 +2,7 @@ from commands.platform_base import PlatformBase
 from domain.domain_schema import DomainSchema
 from core_api.core_api import CoreApi
 
+
 class RegisterApp(PlatformBase):
 
     def __init__(self, args):
@@ -36,7 +37,7 @@ class RegisterApp(PlatformBase):
     def __register_core_api(self, solution, app):
         self.core_api.register_solution(solution)
         print('Registered Solution in Core Api')
-        
+
         self.core_api.register_app(app)
         print('Registered Application in Core Api')
 

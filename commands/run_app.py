@@ -5,11 +5,18 @@ class RunApp(PlatformBase):
 
     def run_presentation(self):
         if self.is_presentation:
+
             self.environment.rm(self.get_app())
+            print('Previous container removed')
+
             self.environment.pull(self.get_app())
+            print('Pulled image')
+
+            print('Staterd Run docker container process')
             self.environment.run(self.get_app(), self.get_tag_name(), self._get_variables(),
                                  dict(self._get_labels(), **self._get_traefik_labels()))
-
+            print('Container is up and running!')
+            
     def _get_variables(self):
         return {
             'API_MODE': True,
