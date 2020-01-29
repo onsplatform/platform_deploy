@@ -13,7 +13,8 @@ class DockerAppDeploy():
         self.registry_password = settings.REGISTRY['password']
 
     def build_image(self, app_tag, labels):
-        build = self.client.images.build(path='.', tag=app_tag, labels=labels, nocache=True)
+        build = self.client.images.build(
+            path='.', tag=app_tag, labels=labels, nocache=True)
         if build:
             return build[0]
 
@@ -26,6 +27,7 @@ class DockerAppDeploy():
     def rm(self, app):
         try:
             container = self.client.containers.get(app)
+            container.stop()
             container.remove()
         except APIError:
             print('docker.errors.APIError at remove()')
@@ -41,7 +43,8 @@ class DockerAppDeploy():
             environment=variables,
             network='plataforma_network',
             ports={"7" + str(randint(100, 999)): 9229},
-            name=app
+            name=app,
+            detach = True
         )
 
     def _get_repository(self, app):
