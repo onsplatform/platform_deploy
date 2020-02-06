@@ -5,15 +5,16 @@ class RunApp(PlatformBase):
 
     def run_presentation(self):
         if self.is_presentation:
+            container_name = self.get_app()
+            if self.environment.container_exists(container_name):
+                self.environment.rm(container_name)
+                print('Previous container removed')
 
-            self.environment.rm(self.get_app())
-            print('Previous container removed')
-
-            self.environment.pull(self.get_app())
+            self.environment.pull(container_name)
             print('Pulled image')
 
             print('Staterd Run docker container process')
-            self.environment.run(self.get_app(), self.get_tag_name(), self._get_variables(),
+            self.environment.run(container_name, self.get_tag_name(), self._get_variables(),
                                  dict(self._get_labels(), **self._get_traefik_labels()))
             print('Container is up and running!')
             
