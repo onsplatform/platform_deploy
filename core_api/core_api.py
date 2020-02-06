@@ -49,12 +49,13 @@ class CoreApi:
         metadata_yml = self.__get_files(metadata_names, path)[0]
         operations = []
         for operation in metadata_yml['operations']:
-
+            # TODO: Create class/interface to load platform.json
             operation['systemId'] = solution['id']
             operation['processId'] = app['id']
             operation['event_in'] = operation['event']
             operation['event_out'] = operation['name'] + '.done'
             operation['version'] = app['version']
+            operation['image'] = '{0}:{1}'.format(app['container'],app['version'])
             operations.append(operation)
         core_operations = core_metadata.Metadata(self.url)
         operations_result = core_operations.create(operations)

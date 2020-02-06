@@ -24,13 +24,18 @@ class DockerAppDeploy():
     def push_image(self, app):
         self.client.images.push(repository=self._get_repository(app))
 
-    def rm(self, app):
+    def container_exists(self,container_name):
+        container = self.client.containers.list(filters = {'name':container_name})
+        return container
+
+    def rm(self, container_name):
         try:
-            container = self.client.containers.get(app)
+            container = self.client.containers.get(container_name)
             container.stop()
             container.remove()
-        except APIError:
-            print('docker.errors.APIError at remove()')
+
+        except APIError as exc:
+            print(exc)
 
     def pull(self, app):
         self.client.images.pull(self._get_repository(app),
@@ -49,3 +54,4 @@ class DockerAppDeploy():
 
     def _get_repository(self, app):
         return '{registry}/{app}'.format(registry=self.registry, app=app)
+

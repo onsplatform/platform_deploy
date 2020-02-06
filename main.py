@@ -40,16 +40,17 @@ args = parser.parse_args()
 if args.build:
     print('')
     print('Initializing Build...')
+    print('')
     BuildApp(args).build()
     print('Build Succeeded!')
     print('')
-    
+
+
 elif args.register_schema:
     print('')
     print('Registering Application Schema...')
     print('')
     RegisterApp(args).register()
-    print('')
     print('Registration Succeeded!')
     print('')
 
@@ -58,6 +59,5 @@ elif args.run_presentation:
     print('Started the process to run presentation...')
     print('')
     RunApp(args).run_presentation()
-    print('')
-    print('Application is running!')
+    print('Presentation is running!')
     print('')
