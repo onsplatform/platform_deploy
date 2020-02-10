@@ -25,7 +25,7 @@ class DockerAppDeploy():
         self.client.images.push(repository=self._get_repository(app))
 
     def container_exists(self,container_name):
-        container = self.client.containers.list(filters = {'name':container_name})
+        container = self.client.containers.list(all =True,filters = {'name':container_name})
         return container
 
     def rm(self, container_name):
