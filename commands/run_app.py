@@ -13,7 +13,7 @@ class RunApp(PlatformBase):
             self.environment.pull(container_name)
             print('Pulled image')
 
-            print('Staterd Run docker container process')
+            print('Started Run docker container process')
             self.environment.run(container_name, self.get_tag_name(), self._get_variables(),
                                  dict(self._get_labels(), **self._get_traefik_labels()))
             print('Container is up and running!')

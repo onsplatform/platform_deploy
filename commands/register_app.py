@@ -18,7 +18,6 @@ class RegisterApp(PlatformBase):
         self.__register_core_api(self.solution.copy(), self.app.copy())
 
     def __register_domain_schema(self, solution, app):
-
         solution_return = self.schema.create_solution(solution)
         if solution_return and solution_return.status_code == 200 and len(solution_return) > 0:
             print('Solution Created')

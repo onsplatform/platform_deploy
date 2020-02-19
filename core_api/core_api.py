@@ -6,8 +6,6 @@ import settings
 from platform_sdk.core_api import core_system_solution, core_app, core_map, core_metadata
 
 
-
-
 class CoreApi:
 
     def __init__(self, environment):
@@ -32,14 +30,13 @@ class CoreApi:
         path = getcwd() + '/Mapa/'
         map_names = self.__list_yaml_files(path)
         map_yml = self.__get_files(map_names, path)[0]
-        content_mirror = str(yaml.dump(map_yml))
-        map_yml['content'] = content_mirror
-        map_yml['name'] = app['name']
-        map_yml['systemId'] = solution['id']
-        map_yml['processId'] = app['id']
-        map_yml['version'] = app['version']
-        core_api_maps = core_map.Map(self.url)
-        map_result = core_api_maps.create(map_yml)
+        map_result = core_map.Map(self.url).create({
+            'content': str(yaml.dump(map_yml)),
+            'name': app['name'],
+            'systemId': solution['id'],
+            'processId': app['id'],
+            'version': app['version']
+        })
         return map_result.content
 
     def upload_operations(self, solution, app):
@@ -55,7 +52,7 @@ class CoreApi:
             operation['event_in'] = operation['event']
             operation['event_out'] = operation['name'] + '.done'
             operation['version'] = app['version']
-            operation['image'] = '{0}:{1}'.format(app['container'],app['version'])
+            operation['image'] = '{0}:{1}'.format(app['container'], app['version'])
             operations.append(operation)
         core_operations = core_metadata.Metadata(self.url)
         operations_result = core_operations.create(operations)
@@ -68,7 +65,7 @@ class CoreApi:
     def __get_files(self, file_names, folder):
         file_list = []
         for file in file_names:
-            with open(folder+file, 'r') as stream:
+            with open(folder + file, 'r') as stream:
                 try:
                     yaml_file = yaml.safe_load(stream)
                     file_list.append(yaml_file)
