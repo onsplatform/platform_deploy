@@ -37,7 +37,7 @@ class RegisterApp(PlatformBase):
         self.core_api.register_solution(solution)
         print('Registered Solution in Core Api')
 
-        self.core_api.register_app(app)
+        self.core_api.register_app(app, solution)
         print('Registered Application in Core Api')
 
         self.core_api.upload_maps(solution, app)
