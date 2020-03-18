@@ -15,6 +15,11 @@ parser.add_argument('--register_schema',
                     default=False,
                     action='store_true'
                     )
+parser.add_argument('--create_entities',
+                    help='cria dominio de uma solucao no schema do ambiente',
+                    default=False,
+                    action='store_true'
+                    )
 parser.add_argument('--run_presentation',
                     help='inicia uma aplicação do tipo presenter',
                     default=False,
@@ -45,8 +50,15 @@ if args.build:
     print('Build Succeeded!')
     print('')
 
+elif args.create_entities:
+    print('')
+    print('Creating Domain Entities')
+    print('')
+    RegisterApp(args).create_entity()
+    print('')
+    print('')
 
-elif args.register_schema:
+elif args.create_entities:
     print('')
     print('Registering Application Schema...')
     print('')

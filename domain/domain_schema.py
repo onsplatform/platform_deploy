@@ -1,5 +1,7 @@
 import requests
 import json
+from os import listdir, getcwd
+from os.path import isfile, join, basename
 
 import settings
 
@@ -48,6 +50,18 @@ class DomainSchema:
         response = requests.post(url=self.url + 'appversion/',
                                  data=json.dumps(new_app_version), headers=self.headers)
         return response.json()
+
+    def create_entity(self, solution):
+        path = getcwd() + '/Dominio/'
+        entity_names = self.__list_yaml_files(path)
+        files = {(entity, open(path + entity, 'rb')) for entity in entity_names}
+        payload = {'solution': solution['name']}
+        response = requests.post(url=self.url + 'create/entity/', data=payload, files=files)
+        return response
+
+    # refact to shared
+    def __list_yaml_files(self, path):
+        return [f for f in listdir(path) if isfile(join(path, f)) and (f.endswith('.yaml') or f.endswith('.yml'))]
 
     def _get_app_version_from_config(self, app, tag):
         return {
