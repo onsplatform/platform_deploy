@@ -30,7 +30,6 @@ class RegisterApp(PlatformBase):
             print('Solution Created')
         else:
             print('Solution not Created')
-
         app_id = self.schema.get_app_id(solution['id_domain'], app['name'])
         if app_id:
             self.schema.update_app(app_id, app, solution,

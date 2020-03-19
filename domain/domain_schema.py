@@ -49,14 +49,28 @@ class DomainSchema:
         new_app_version['app_id'] = app['id']
         response = requests.post(url=self.url + 'appversion/',
                                  data=json.dumps(new_app_version), headers=self.headers)
+        self.create_maps(app['name'], app['version'])
         return response.json()
 
+    def create_maps(self, app_name, app_version):
+        payload = {'app': app_name, 'app_version': app_version}
+        url = 'create/map/'
+        response = self._upload_yamls('/Mapa/', url, payload)
+        if response and response.status_code == 200:
+            print('Maps uploaded')
+        else:
+            print('Maps not uploaded')
+
     def create_entity(self, solution):
-        path = getcwd() + '/Dominio/'
-        entity_names = self.__list_yaml_files(path)
-        files = {(entity, open(path + entity, 'rb')) for entity in entity_names}
         payload = {'solution': solution['name']}
-        response = requests.post(url=self.url + 'create/entity/', data=payload, files=files)
+        url = 'create/entity/'
+        return self._upload_yamls('/Dominio/', url, payload)
+
+    def _upload_yamls(self, path, url, payload):
+        path = getcwd() + path
+        files = self.__list_yaml_files(path)
+        files = {(entity, open(path + entity, 'rb')) for entity in files}
+        response = requests.post(url=self.url + url, data=payload, files=files)
         return response
 
     # refact to shared

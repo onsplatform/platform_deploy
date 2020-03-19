@@ -58,7 +58,7 @@ elif args.create_entities:
     print('')
     print('')
 
-elif args.create_entities:
+elif args.register_schema:
     print('')
     print('Registering Application Schema...')
     print('')
