@@ -47,7 +47,7 @@ class DockerAppDeploy():
             labels=labels,
             environment=variables,
             network='plataforma_network',
-            ports={"7" + str(randint(100, 999)): 9229},
+            ports={9229: "7" + str(randint(100, 999))},
             name=app,
             detach = True
         )
