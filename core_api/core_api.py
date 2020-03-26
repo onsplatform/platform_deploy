@@ -1,6 +1,6 @@
 import yaml
 from os import listdir, getcwd
-from os.path import isfile, join
+from os.path import isfile, join, exists
 
 import settings
 from platform_sdk.core_api import core_system_solution, core_app, core_map, core_metadata
@@ -29,36 +29,37 @@ class CoreApi:
 
     def upload_maps(self, solution, app):
         path = getcwd() + '/Mapa/'
-        map_names = self.__list_yaml_files(path)
-        map_yml = self._get_yaml(map_names, path)
-        map_result = core_map.Map(self.url).create({
-            'content': map_yml,
-            'name': app['name'],
-            'systemId': solution['id'],
-            'processId': app['id'],
-            'version': app['version']
-        })
-        return map_result.content
+        if exists(path):
+            map_names = self.__list_yaml_files(path)
+            map_yml = self._get_yaml(map_names, path)
+            map_result = core_map.Map(self.url).create({
+                'content': map_yml,
+                'name': app['name'],
+                'systemId': solution['id'],
+                'processId': app['id'],
+                'version': app['version']
+            })
+            return map_result.content
 
     def upload_operations(self, solution, app):
-
         path = getcwd() + '/Metadados/'
-        metadata_names = self.__list_yaml_files(path)
-        metadata_yml = self._get_yaml_to_dict(metadata_names, path)[0]
-        operations = []
-        for operation in metadata_yml['operations']:
-            # TODO: Create class/interface to load platform.json
-            operation['systemId'] = solution['id']
-            operation['processId'] = app['id']
-            operation['event_in'] = operation['event']
-            operation['event_out'] = operation['name'] + '.done'
-            operation['version'] = app['version']
-            operation['image'] = '{0}:{1}'.format(app['container'], app['version'])
-            operations.append(operation)
-        core_operations = core_metadata.Metadata(self.url)
-        operations_result = core_operations.create(operations)
+        if exists(path):
+            metadata_names = self.__list_yaml_files(path)
+            metadata_yml = self._get_yaml_to_dict(metadata_names, path)[0]
+            operations = []
+            for operation in metadata_yml['operations']:
+                # TODO: Create class/interface to load platform.json
+                operation['systemId'] = solution['id']
+                operation['processId'] = app['id']
+                operation['event_in'] = operation['event']
+                operation['event_out'] = operation['name'] + '.done'
+                operation['version'] = app['version']
+                operation['image'] = '{0}:{1}'.format(app['container'], app['version'])
+                operations.append(operation)
+            core_operations = core_metadata.Metadata(self.url)
+            operations_result = core_operations.create(operations)
 
-        return operations_result.content
+            return operations_result.content
 
     def __list_yaml_files(self, path):
         return [f for f in listdir(path) if isfile(join(path, f)) and (f.endswith('.yaml') or f.endswith('.yml'))]
