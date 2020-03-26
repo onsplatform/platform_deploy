@@ -1,7 +1,7 @@
 import requests
 import json
 from os import listdir, getcwd
-from os.path import isfile, join, basename
+from os.path import isfile, join, basename, exists
 
 import settings
 
@@ -68,10 +68,11 @@ class DomainSchema:
 
     def _upload_yamls(self, path, url, payload):
         path = getcwd() + path
-        files = self.__list_yaml_files(path)
-        files = {(entity, open(path + entity, 'rb')) for entity in files}
-        response = requests.post(url=self.url + url, data=payload, files=files)
-        return response
+        if exists(path):
+            files = self.__list_yaml_files(path)
+            files = {(entity, open(path + entity, 'rb')) for entity in files}
+            response = requests.post(url=self.url + url, data=payload, files=files)
+            return response
 
     # refact to shared
     def __list_yaml_files(self, path):
