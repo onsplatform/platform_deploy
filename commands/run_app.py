@@ -22,7 +22,8 @@ class RunApp(PlatformBase):
         return {
             'API_MODE': True,
             'SYSTEM_ID': self.get_system_id(),
-            'PROCESS_ID': self.get_app_process_id()
+            'PROCESS_ID': self.get_app_process_id(),
+            'VERSION': self.get_tag_name()
         }
 
     def _get_traefik_labels(self):
