@@ -1,3 +1,27 @@
+Basic commands:
+
+1. Installation (path: /plataform_deploy/):
+	1. pipenv --three
+	2. pipenv install
+
+2. Load environment (path: /plataform_deploy/):
+	1. pipenv shell
+
+3. Deploy entities (path: folder which contains an application of type 'domain' along with the respective plataform.json)
+	1. python $path_to_plataform_deploy\main.py --create_entities --environment $environmentCode --platform $plataformaCode 
+	2. Example: python c:\plataform_deploy\main.py --create_entities --environment tst --platform docker 
+
+4. Build and deploy application's image (path: folder which contains an application of type 'process' or 'presentation' along with the respective plataform.json)
+	1. python $path_to_plataform_deploy\main.py --build --environment $environmentCode --platform $plataformaCode 
+	2. Example: python c:\plataform_deploy\main.py --build --environment tst --platform docker 
+	
+5. Deploy application's map and metadata (path: folder which contains an application of type 'process' or 'presentation' along with the respective plataform.json)
+	1. python $path_to_plataform_deploy\main.py --register_schema --environment $environmentCode --platform $plataformaCode 
+	2. Example: python c:\plataform_deploy\main.py --register_schema --environment tst --platform docker
+
+6. Run a presentation app (path: folder which contains an application of type 'presentation' along with the respective plataform.json)
+	1. python $path_to_plataform_deploy\main.py --run_presentation --environment $environmentCode --platform $plataformaCode 
+	2. Example: python c:\plataform_deploy\main.py --run_presentation --environment tst --platform docker
 
 The config_json file needs to respect the following structure:
 
