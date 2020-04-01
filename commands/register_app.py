@@ -35,6 +35,7 @@ class RegisterApp(PlatformBase):
         else:
             self.schema.create_app(app, solution, self.get_app_and_tag())
             print('App Created')
+        self.schema.create_maps(app['name'], app['version'])
 
     def create_solution(self, solution):
         solution_return = self.schema.create_solution(solution)

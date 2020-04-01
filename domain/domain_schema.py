@@ -37,11 +37,12 @@ class DomainSchema:
     def update_app(self, app_id, app, solution, tag):
         new_app = self._get_app_from_config(app, solution)
         new_app['id'] = app_id
-        response = requests.put(url=self.url + 'app/{id}/'.format(id=new_app['id']), data=json.dumps(new_app),
+        response = requests.put(url=self.url + 'app/{id}/'.format(id=new_app['id']),
+                                data=json.dumps(new_app),
                                 headers=self.headers)
         app['process_id'] = app['id']
         app['id'] = app_id
-        self.create_app_version(app, tag)
+        self.update_app_version(app, tag)
         return response.json()
 
     def create_app_version(self, app, tag):
@@ -49,8 +50,21 @@ class DomainSchema:
         new_app_version['app_id'] = app['id']
         response = requests.post(url=self.url + 'appversion/',
                                  data=json.dumps(new_app_version), headers=self.headers)
-        self.create_maps(app['name'], app['version'])
         return response.json()
+
+    def update_app_version(self, app, tag):
+        response = requests.get(url=f"{self.url}appversion/{app['name']}/{app['version']}")
+        app_version = response.json()
+        if response.status_code == 200 and len(app_version) > 0:
+            app_version = app_version[0]
+            app_version['version'] = app['version']
+            app_version['tag'] = tag
+            app_version['date_begin_validity'] = app['date_begin_validity']
+            app_version['date_end_validity'] = app['date_end_validity']
+            app_version['process_id'] = app['process_id']
+            response = requests.put(url=f"{self.url}appversion/{app_version['id']}/",
+                                    data=json.dumps(app_version), headers=self.headers)
+            return response.json()
 
     def create_maps(self, app_name, app_version):
         payload = {'app': app_name, 'app_version': app_version}
@@ -93,5 +107,6 @@ class DomainSchema:
             'solution_id': solution['id_domain'],
             'container': app['container'],
             'type': app['type'],
-            'technology': app['tecnology']
+            'technology': app['tecnology'],
+            'version': app['version'],
         }
