@@ -42,7 +42,9 @@ class DomainSchema:
                                 headers=self.headers)
         app['process_id'] = app['id']
         app['id'] = app_id
-        self.update_app_version(app, tag)
+        app_updated = self.update_app_version(app, tag)
+        if not app_updated:
+            self.create_app_version(app, tag)
         return response.json()
 
     def create_app_version(self, app, tag):
