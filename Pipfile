@@ -10,8 +10,9 @@ pep8 = "*"
 argparse = "*"
 docker = "*"
 requests = "*"
-ons-platform-python-sdk = {editable = true, ref = "coreapi_integration",git = "https://github.com/onsplatform/platform_sdk.git"}
+ons-platform-python-sdk = {ref = "coreapi_integration",git = "https://github.com/onsplatform/platform_sdk.git",editable = true}
 pyyaml = "*"
+pytz = "*"
 
 [requires]
 python_version = "3.7"
