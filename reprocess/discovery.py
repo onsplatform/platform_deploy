@@ -14,9 +14,10 @@ class DiscoveryReprocess:
         discovery = {
             "date_begin_validity": app['date_begin_validity'],
             "date_end_validity": app['date_end_validity'],
-            "process_id": app['id'],
-            "solution": solution['name']
+            "process_id": app['process_id'],
+            "solution": solution['name'],
+            "app": app['name']
         }
 
-        response = requests.post(url=self.url + 'force_reprocess/', data=json.dumps(discovery), headers=self.headers)
+        response = requests.post(url=self.url + 'discovery/force_reprocess', data=json.dumps(discovery), headers=self.headers)
         return response.status_code == 200

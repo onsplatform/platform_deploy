@@ -43,10 +43,12 @@ class RegisterApp(PlatformBase):
         self.check_reprocess(app, solution)
 
     def check_reprocess(self, app, solution):
-        date_validity = datetime.datetime.strptime(app['date_begin_validity'], '%Y-%m-%d %H:%M:%S')
+        print('Checking reprocess')
+        date_validity = datetime.datetime.strptime(app['date_begin_validity'], '%Y-%m-%dT%H:%M')
         pst = pytz.timezone('Brazil/East')
         pst.localize(date_validity)
         if date_validity < datetime.datetime.now():
+            print('It is necessary to reprocess')
             self.discover_reprocess.force_reprocess(app, solution)
 
     def create_solution(self, solution):

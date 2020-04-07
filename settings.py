@@ -14,13 +14,13 @@ SCHEMA = {
 
 DISCOVERY = {
     'tst': {
-        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:8099/')
+        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:9099/')
     },
     'hmg': {
-        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:8099/')
+        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:9099/')
     },
     'prd': {
-        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:8099/')
+        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:9099/')
     }
 }
 
