@@ -1,6 +1,10 @@
+import pytz
+import datetime
+
 from commands.platform_base import PlatformBase
 from domain.domain_schema import DomainSchema
 from core_api.core_api import CoreApi
+from reprocess.discovery import DiscoveryReprocess
 
 
 class RegisterApp(PlatformBase):
@@ -12,6 +16,7 @@ class RegisterApp(PlatformBase):
 
         self.schema = DomainSchema(args.environment)
         self.core_api = CoreApi(args.environment)
+        self.discover_reprocess = DiscoveryReprocess(args.environment)
 
     def register(self):
         self.__register_domain_schema(self.solution.copy(), self.app.copy())
@@ -29,13 +34,22 @@ class RegisterApp(PlatformBase):
         self.create_solution(solution)
         app_id = self.schema.get_app_id(solution['id_domain'], app['name'])
         if app_id:
-            self.schema.update_app(app_id, app, solution,
-                                   self.get_app_and_tag())
+            self.schema.update_app(app_id, app, solution, self.get_app_and_tag())
             print('App Updated')
         else:
             self.schema.create_app(app, solution, self.get_app_and_tag())
             print('App Created')
         self.schema.create_maps(app['name'], app['version'])
+        self.check_reprocess(app, solution)
+
+    def check_reprocess(self, app, solution):
+        print('Checking reprocess')
+        date_validity = datetime.datetime.strptime(app['date_begin_validity'], '%Y-%m-%dT%H:%M')
+        pst = pytz.timezone('Brazil/East')
+        pst.localize(date_validity)
+        if date_validity < datetime.datetime.now():
+            print('It is necessary to reprocess')
+            self.discover_reprocess.force_reprocess(app, solution)
 
     def create_solution(self, solution):
         solution_return = self.schema.create_solution(solution)

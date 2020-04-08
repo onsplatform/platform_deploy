@@ -12,6 +12,18 @@ SCHEMA = {
     }
 }
 
+DISCOVERY = {
+    'tst': {
+        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:9099/')
+    },
+    'hmg': {
+        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:9099/')
+    },
+    'prd': {
+        'uri': os.environ.get('DISCOVERY_URI', 'http://localhost:9099/')
+    }
+}
+
 CORE_API = {
     'tst': {
         'uri': os.environ.get('COREAPI_URI', 'http://localhost:9110/core/')
