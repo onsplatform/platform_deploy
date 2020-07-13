@@ -48,7 +48,7 @@ class RegisterApp(PlatformBase):
         pst = pytz.timezone('Brazil/East')
         pst.localize(date_validity)
         if date_validity < datetime.datetime.now():
-            print('It is necessary to reprocess')
+            print('It is necessary to reprocess...')
             self.discover_reprocess.force_reprocess(app, solution)
 
     def create_solution(self, solution):

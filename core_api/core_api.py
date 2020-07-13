@@ -48,12 +48,14 @@ class CoreApi:
             metadata_yml = self._get_yaml_to_dict(metadata_names, path)[0]
             operations = []
             for operation in metadata_yml['operations']:
+                import pdb;pdb.set_trace()
                 # TODO: Create class/interface to load platform.json
                 operation['systemId'] = solution['id']
                 operation['processId'] = app['id']
                 operation['event_in'] = operation['event']
                 operation['event_out'] = operation['name'] + '.done'
                 operation['version'] = app['version']
+                operation['reprocessable'] = operation.get('reprocessOnDeploy', False)
                 operation['image'] = '{0}:{1}'.format(app['container'], app['version'])
                 operations.append(operation)
             core_operations = core_metadata.Metadata(self.url)
