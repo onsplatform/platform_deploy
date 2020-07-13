@@ -48,7 +48,6 @@ class CoreApi:
             metadata_yml = self._get_yaml_to_dict(metadata_names, path)[0]
             operations = []
             for operation in metadata_yml['operations']:
-                import pdb;pdb.set_trace()
                 # TODO: Create class/interface to load platform.json
                 operation['systemId'] = solution['id']
                 operation['processId'] = app['id']
